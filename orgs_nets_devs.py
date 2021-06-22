@@ -4,7 +4,8 @@ from merakiCredentials import MerakiKey
 
 
 def get_orgs():
-	"""function for retrieving a list of organizations managed by Merarki
+	"""
+		function for retrieving a list of organizations managed by Merarki
 	"""
 	global hdr
 	url = "https://api.meraki.com/api/v0/organizations"
@@ -15,9 +16,9 @@ def get_orgs():
 	get_networks(org_list)
 
 
-
 def get_networks(org_list):
-	"""Print out the list of networks for each organization
+	"""
+		function for retrieving a list of networks for each organization
 	"""
 	global org
 	for org in org_list:
@@ -25,11 +26,15 @@ def get_networks(org_list):
 		url = 'https://api.meraki.com/api/v0/organizations/{}/networks'.format(org['id'])
 		resp = requests.get(url, headers=hdr)
 		net_list = resp.json()
+
+		#print_net_info(net_list)
+
 		get_devices(net_list)
 
 
 def get_devices(net_list):
-	"""Collect the devices in a network
+	"""
+		function for retrieving a list of devices in each network
 	"""
 	for net in net_list:
 		try:
@@ -39,7 +44,7 @@ def get_devices(net_list):
 			dev_list = resp.json()
 			print_dev_info(dev_list)
 		except:
-			print('{} organization either has not networks or the networka have no devices'.format(org['name']))
+			print('{} organization either has not networks or the networks have no devices'.format(org['name']))
 			pass
 		print('\n')
 
@@ -49,7 +54,7 @@ def print_orgs_info(org_list):
 	"""Print list of organizations
 	"""
 	print("{0:30}{1:30}".format("Organization ID", "Organization Name"))
-	for org in orgs_list:
+	for org in org_list:
 		print("{0:30}{1:30}".format(org['id'], org['name']))
 
 def print_net_info(net_list):
